@@ -1,0 +1,34 @@
+name: Daily Sesame History Fetcher
+
+on:
+  schedule:
+    # UTC 18:13 = JST 03:13
+    - cron: '13 18 * * *'
+  workflow_dispatch: 
+
+jobs:
+  fetch-history:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@1
+      with:
+        bundler-cache: true
+
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        bundle install
+
+    - name: Run script
+      env:
+        SESAME_API_KEY: ${{ secrets.SESAME_API_KEY }}
+        SESAME_UUID: ${{ secrets.SESAME_UUID }}
+        AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
+        AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+        AIRTABLE_TABLE_ID: ${{ secrets.AIRTABLE_TABLE_ID }}
+      run: ruby main.rb
