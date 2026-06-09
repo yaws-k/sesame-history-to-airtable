@@ -1,4 +1,4 @@
-# 1. Sesame History to Airtable <!-- omit from toc -->
+# Sesame History to Airtable <!-- omit from toc -->
 
 セサミ（スマートロック）の履歴をAirtableに転送するスクリプトです。
 
